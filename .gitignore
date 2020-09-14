@@ -36,5 +36,8 @@ yarn-debug.log*
 .yarn-integrity
 
 # Ignore Ruby gems.
-
 /vendor/budle
+
+# Ignore environment variables
+.env.development
+.env.production
