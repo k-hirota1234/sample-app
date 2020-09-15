@@ -10,21 +10,25 @@ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
 apt-get update && apt-get install -y yarn
 
-RUN mkdir /sample-app
-WORKDIR /sample-app
+ENV APP_PATH /sample-app
 
-ADD Gemfile /sample-app/Gemfile
-ADD Gemfile.lock /sample-app/Gemfile.lock
+RUN mkdir $APP_PATH
+WORKDIR $APP_PATH
+
+ADD Gemfile $APP_PATH/Gemfile
+ADD Gemfile.lock $APP_PATH/Gemfile.lock
 
 RUN gem install bundler:2.1.4
 RUN bundle install
 
-ADD . /sample-app
+ADD . $APP_PATH
 
 # Nginxと通信を行うための準備
 RUN mkdir -p tmp/sockets
-VOLUME /sample-app/public
-VOLUME /sample-app/tmp
+RUN mkdir -p tmp/pids
+
+VOLUME $APP_PATH/public
+VOLUME $APP_PATH/tmp
 
 RUN yarn install --check-files
 RUN SECRET_KEY_BASE=placeholder bundle exec rails assets:precompile
