@@ -2,7 +2,7 @@ version: 2
 services:
   app:
     image: 966489357781.dkr.ecr.ap-northeast-1.amazonaws.com/sample-app-rails
-    command: bash -c "bundle exec rails db:migrate && bundle exec rails assets:precompile && bundle exec puma -C config/puma.rb"
+    command: bash -c "bundle exec rails db:migrate && bundle exec rails assets:precompile && bundle exec unicorn -c config/unicorn.rb"
     env_file:
       - ../.env.production
     working_dir: /sample-app
