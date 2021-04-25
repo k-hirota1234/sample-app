@@ -9,6 +9,10 @@
 - アプリケーションサーバー: Puma
 - Webサーバー: Nginx
 
+詳しい手順は↓
+
+https://qiita.com/kazama1209/items/7a8dc91a76c3db612410
+
 ## セットアップ
 
 ```
